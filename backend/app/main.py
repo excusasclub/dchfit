@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.database.mongodb import connect_db, close_db
-from app.routers import auth
+from app.routers import auth, daily_logs
 
 
 @asynccontextmanager
@@ -28,6 +28,7 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(daily_logs.router)
 
 
 @app.get("/health")
