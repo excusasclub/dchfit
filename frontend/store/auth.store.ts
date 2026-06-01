@@ -5,6 +5,7 @@ interface AuthState {
     user: { id: string; username: string; email: string } | null
     setAuth: (token: string, user: AuthState["user"]) => void
     logout: () => void
+    hydrate: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -16,6 +17,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     },
     logout: () => {
         localStorage.removeItem("access_token")
+        localStorage.removeItem("auth_user")
         set({ accessToken: null, user: null })
+    },
+    hydrate: () => {
+        const token = localStorage.getItem("access_token")
+        const userRaw = localStorage.getItem("auth_user")
+        if (token && userRaw) {
+            set({ accessToken: token, user: JSON.parse(userRaw) })
+        }
     },
 }))

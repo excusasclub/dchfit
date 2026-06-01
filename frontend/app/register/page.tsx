@@ -22,6 +22,7 @@ export default function RegisterPage() {
             const data = await authService.register(username, email, password)
             localStorage.setItem("access_token", data.access_token)
             const me = await authService.me()
+            localStorage.setItem("auth_user", JSON.stringify(me))
             setAuth(data.access_token, me)
             router.push("/dashboard")
         } catch {

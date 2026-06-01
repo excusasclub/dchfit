@@ -5,8 +5,12 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function DashboardPage() {
-    const { user, logout } = useAuthStore()
+    const { user, logout, hydrate } = useAuthStore()
     const router = useRouter()
+
+    useEffect(() => {
+        hydrate()
+    }, [])
 
     useEffect(() => {
         if (!user) {

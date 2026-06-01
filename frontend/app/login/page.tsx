@@ -21,6 +21,7 @@ export default function LoginPage() {
             const data = await authService.login(email, password)
             localStorage.setItem("access_token", data.access_token)
             const me = await authService.me()
+            localStorage.setItem("auth_user", JSON.stringify(me))
             setAuth(data.access_token, me)
             router.push("/dashboard")
         } catch {
